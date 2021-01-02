@@ -132,9 +132,9 @@ y\\
 \omega
 \end{pmatrix}
 $$
-射影変換はアフィン変換よりいろいろな変換を表わせ、例えば長方形から台形への変換なども表せる。この射影変換をホモグラフィー行列$H$を使って次のように表すこととする。
+射影変換はアフィン変換よりいろいろな変換を表わせ、例えば長方形から台形への変換なども表せる。この射影変換は、同次座標$\pmb{x}$とホモグラフィー行列$H$とを使って次のように表すこととする。
 $$
-x'=Hx
+\pmb{x}'=H\pmb{x}
 $$
 
 ## DLTアルゴリズム
@@ -157,3 +157,78 @@ h_7 \\ h_8 \\ h_9
 =\pmb{0}
 $$
 と$Ah=0$という形になる。この式について特異値分解(Singular Value Decomposition: SVD)を用いて$H$を求めることができる。
+
+**導出**
+
+ホモグラフィー行列$H$の要素を次のように表す。($h^{1T}$の$1$は添字で$T$は転置の意味)
+$$
+\begin{aligned}
+\pmb{h}^{1T}=\left(h_1,h_2,h_3\right)\\
+\pmb{h}^{2T}=\left(h_4,h_5,h_6\right)\\
+\pmb{h}^{3T}=\left(h_7,h_8,h_9\right)
+\end{aligned}
+$$
+そうすると、ホモグラフィー変換を表す$H\pmb{x}$は次のように表される。
+$$
+\pmb{x}'=
+H\pmb{x}=\begin{pmatrix}
+\pmb{h}^{1T}\pmb{x}\\
+\pmb{h}^{2T}\pmb{x}\\
+\pmb{h}^{3T}\pmb{x}
+\end{pmatrix}
+$$
+外積について、自分自身を取ると$\pmb{0}$だから、
+$$
+\begin{aligned}
+\pmb{x}'\times\pmb{x}'&=\pmb{x}'\times H\pmb{x}'\\
+&=
+\begin{pmatrix}
+y'\pmb{h}^{3T}\pmb{x}-\omega'\pmb{h}^{2T}\pmb{x}\\
+\omega'\pmb{h}^{1T}\pmb{x}-x'\pmb{h}^{3T}\pmb{x}\\
+x'\pmb{h}^{2T}\pmb{x}-y'\pmb{h}^{1T}\pmb{x}
+\end{pmatrix}\\
+&=0
+\end{aligned}
+$$
+$\pmb{h}^{1T}\pmb{x}$はスカラーだから、$\pmb{x}^T\pmb{h}^{1}$と等しい。よって、例えば1行目について次のようになる。
+
+$$
+\begin{aligned}
+y'\pmb{h}^{3T}\pmb{x}
+-\omega'\pmb{h}^{2T}\pmb{x}
+&=\pmb{0}^T\pmb{h}^1
+-\omega'\pmb{x}^T\pmb{h}^2
++y'\pmb{x}^T\pmb{h}^{3}\\
+&=
+\begin{pmatrix}
+0&0&0&
+-\omega' x&-\omega' y&-\omega' \omega&
+y'x&y'y&y'\omega
+\end{pmatrix}
+\begin{pmatrix}
+\pmb{h}^{1}\\
+\pmb{h}^{2}\\
+\pmb{h}^{3}
+\end{pmatrix}
+\end{aligned}
+$$
+よってまとめると次のようになる。
+$$
+\begin{pmatrix}
+\pmb{0}^T&
+-\omega' \pmb{x}^T&
+y' \pmb{x}^T\\
+\omega' \pmb{x}^T&
+\pmb{0}^T&
+-x' \pmb{x}^T\\
+-y' \pmb{x}^T&
+x' \pmb{x}^T&
+\pmb{0}^T
+\end{pmatrix}
+\begin{pmatrix}
+\pmb{h}^{1}\\
+\pmb{h}^{2}\\
+\pmb{h}^{3}
+\end{pmatrix}
+=\pmb{0}
+$$
